@@ -156,9 +156,15 @@
 const devToUsername = "donesrom";
 const blogContainer = document.getElementById("blog-container");
 
+// // Set the refresh interval (adjust as needed)
+// const refreshInterval = 60 * 60 * 1000; // 1 hours in milliseconds
+
+// // Start the interval
+// let intervalId = setInterval(fetchDevToPosts, refreshInterval);
+
 async function fetchDevToPosts() {
   try {
-    const response = await fetch(`https://dev.to/api/articles?username=${devToUsername}`);
+    const response = await fetch(`https://dev.to/api/articles?username=${devToUsername}&sort=published_at`);
     const data = await response.json();
 
     // Clear existing content (optional)
@@ -170,7 +176,7 @@ async function fetchDevToPosts() {
     }
 
     // Loop through each post and create the HTML structure dynamically
-    for (const post of data.slice(0, 10)) { 
+    for (const post of data.slice(0, 4)) { 
       const blogPost = document.createElement("div");
       blogPost.classList.add("blog-post");
 
