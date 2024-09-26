@@ -151,22 +151,55 @@
     });
   }
 
-  /**
-   * Skills animation
-   */
-  let skilsContent = select('.skills-content');
-  if (skilsContent) {
-    new Waypoint({
-      element: skilsContent,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
-        });
-      }
-    })
+
+//Articles  posts section
+const devToUsername = "donesrom";
+const blogContainer = document.getElementById("blog-container");
+
+async function fetchDevToPosts() {
+  try {
+    const response = await fetch(`https://dev.to/api/articles?username=${devToUsername}`);
+    const data = await response.json();
+
+    // Clear existing content (optional)
+    blogContainer.innerHTML = "";
+
+    if (data.length === 0) {
+      blogContainer.textContent = "No blog posts found.";
+      return;
+    }
+
+    // Loop through each post and create the HTML structure dynamically
+    for (const post of data.slice(0, 10)) { 
+      const blogPost = document.createElement("div");
+      blogPost.classList.add("blog-post");
+
+      const heading = document.createElement("h4");
+      const postLink = document.createElement("a");
+      postLink.href = post.url; // Add link to heading
+      postLink.textContent = post.title;
+      postLink.target = "_blank"; // Open links in a new tab
+      heading.appendChild(postLink);
+
+      // Append the image and heading to the blog post container
+      // blogPost.appendChild(image);
+      const publishedDate = document.createElement("p");
+      publishedDate.textContent = "Published: " + new Date(post.published_at).toLocaleDateString();
+      blogPost.appendChild(heading);
+
+      // Append the entire blog post container to the main container
+      blogContainer.appendChild(blogPost);
+      blogPost.appendChild(publishedDate);
+
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    blogContainer.textContent = "Error fetching blog posts. Please try again later.";
   }
+}
+fetchDevToPosts(); 
+
+//Portfolio section ends 
 
   /**
    * Porfolio isotope and filter
@@ -199,20 +232,7 @@
   });
 
   /**
-   * Initiate portfolio lightbox 
-   */
-  const portfolioLightbox = GLightbox({
-    selector: '.portfolio-lightbox'
-  });
 
-  /**
-   * Initiate portfolio details lightbox 
-   */
-  const portfolioDetailsLightbox = GLightbox({
-    selector: '.portfolio-details-lightbox',
-    width: '90%',
-    height: '90vh'
-  });
 
   /**
    * Portfolio details slider
@@ -232,22 +252,7 @@
   });
 
   /**
-   * Testimonials slider
-   */
-  new Swiper('.testimonials-slider', {
-    speed: 600,
-    loop: true,
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    },
-    slidesPerView: 'auto',
-    pagination: {
-      el: '.swiper-pagination',
-      type: 'bullets',
-      clickable: true
-    }
-  });
+  
 
   /**
    * Animation on scroll
