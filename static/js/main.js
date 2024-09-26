@@ -176,7 +176,7 @@ async function fetchDevToPosts() {
     }
 
     // Loop through each post and create the HTML structure dynamically
-    for (const post of data.slice(0, 4)) { 
+    for (const post of data.slice(0, 10)) { 
       const blogPost = document.createElement("div");
       blogPost.classList.add("blog-post");
 
