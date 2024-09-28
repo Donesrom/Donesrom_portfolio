@@ -156,11 +156,11 @@
 const devToUsername = "donesrom";
 const blogContainer = document.getElementById("blog-container");
 
-// // Set the refresh interval (adjust as needed)
-// const refreshInterval = 60 * 60 * 1000; // 1 hours in milliseconds
+// Set the refresh interval (adjust as needed)
+const refreshInterval = 60 * 1000; // 1 hours in milliseconds
 
-// // Start the interval
-// let intervalId = setInterval(fetchDevToPosts, refreshInterval);
+// Start the interval
+let intervalId = setInterval(fetchDevToPosts, refreshInterval);
 
 async function fetchDevToPosts() {
   try {
